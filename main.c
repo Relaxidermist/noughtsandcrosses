@@ -58,17 +58,21 @@ int welcome(){
     return key;
 }
 
-int draw(int init){
+int draw(int init)
+{
     
     char *pg;
 
     if(init==1)
     {
         pg = makegrid();
-
-        for(int i=0; i<GRIDSIZE; i++)
+        
+        for(int i=*pg; i<(*pg+GRIDSIZE); i++)
         {
-            printf("%d\n",*(pg+i));
+            for(int j=i; j<(i+GRIDSIZE); j++)
+            {   
+                printf("%d\n",j);
+            }
         }
     }
 
@@ -77,13 +81,21 @@ int draw(int init){
 char *makegrid()
 {
     //This function returns a pointer to an array containing a grid
-    static char grid[10];
+    static char rows[10], columns[10];
 
     for(int i=0;i<GRIDSIZE;i++)
-    {
-        printf("hello\n");
-        grid[i] = i;
+    {   
+
+        for(int j=0;j<GRIDSIZE;j++)
+        {
+            columns[j]=j++;
+        }
+
+        rows[i] = columns;
     }
-    return grid;
+    return rows;
 }
+
+
+
 
