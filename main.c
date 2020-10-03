@@ -1,16 +1,18 @@
 #include<stdio.h>
+#include<string.h>
 
 // This is a simple program that plays noughts and crosses in the bash shell
 int draw();
 int welcome();
-int *makegrid();
+char *makegrid();
 
 char choice;
 
-#define GRIDSIZE 2
+#define GRIDSIZE 3
 
 int main()
 {
+
     choice=welcome();
 
     if(choice=='y')
@@ -34,6 +36,7 @@ int main()
 }
 
 int welcome(){
+    
     char key;
     int select = 1;
     
@@ -56,26 +59,30 @@ int welcome(){
 }
 
 int draw(int init){
-    int *pg;
+    
+    char *pg;
 
-    if(init==1){
-        pg = makegrid(GRIDSIZE);
+    if(init==1)
+    {
+        pg = makegrid();
+
+        for(int i=0; i<GRIDSIZE; i++)
+        {
+            printf("%d\n",*(pg+i));
+        }
     }
 
 }
 
-int *makegrid(int size)
+char *makegrid()
 {
-    int grid[size];
+    //This function returns a pointer to an array containing a grid
+    static char grid[10];
 
-    for(int i=0;i<size;i++)
+    for(int i=0;i<GRIDSIZE;i++)
     {
-        for (int j=0; j<size;j++)
-        {
-            grid[i] = i;
-        }
-        
-
+        printf("hello\n");
+        grid[i] = i;
     }
     return grid;
 }
