@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<string.h>
+#include<stdlib.h>
 
 // This is a simple program that plays noughts and crosses in the bash shell
 int draw();
@@ -65,33 +65,36 @@ int draw(int init)
 
     if(init==1)
     {
-        pg = makegrid();
+        char *rows, *columns;
         
-        for(int i=*pg; i<(*pg+GRIDSIZE); i++)
+        pg = makegrid(rows, columns);
+
+        for(int i=0; i<GRIDSIZE; i++)
         {
-            for(int j=i; j<(i+GRIDSIZE); j++)
-            {   
-                printf("%d\n",j);
-            }
+
+            printf("%x\n",pg + i);
+
         }
     }
 
 }
 
-char *makegrid()
+char *makegrid(char *rows, char *columns)
 {
     //This function returns a pointer to an array containing a grid
-    static char rows[10], columns[10];
+    rows = (char*)malloc(GRIDSIZE*sizeof(char));
 
     for(int i=0;i<GRIDSIZE;i++)
     {   
+        columns = (char*)malloc(GRIDSIZE*sizeof(char));
 
         for(int j=0;j<GRIDSIZE;j++)
         {
-            columns[j]=j++;
+            printf("%x\n", &columns[j]);
         }
 
         rows[i] = columns;
+        printf("%x\n",&rows[i]);
     }
     return rows;
 }
