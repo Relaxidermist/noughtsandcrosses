@@ -1,104 +1,47 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-// This is a simple program that plays noughts and crosses in the bash shell
-int draw();
-int welcome();
-char *makegrid();
 
-char choice;
-
-#define GRIDSIZE 3
+#define GRIDSIZE 5
 
 int main()
 {
+    char **rows, *columns;
 
-    choice=welcome();
-
-    if(choice=='y')
+    // Allocate memory for rows in grid pointers to pointers,
+    // this is because this is a 1D array which will point to 
+    // other 1D arrays
+    rows = (char**)malloc(GRIDSIZE*sizeof(char*));
+    // Fill array with values and print
+    for(int i=0; i<GRIDSIZE; i++)
     {
-        //Play the game
-        printf("\nLets play!\n");
-        printf("\nPress q to if you would like to quit\n");
+        // Allocate memory for 1D array for this array index in rows[i]
+        // rows[i] is a char pointer pointer type
+        rows[i] = (char*)malloc(GRIDSIZE*sizeof(char));
 
-
-        while(getchar()!='q')
+        for(int j=0; j<GRIDSIZE; j++)
         {
-            draw(1);
-        }
+            // assign columns char pointer type the address of the allocated
+            // array for the point point array.
+            columns = rows[i];
 
+            // put some values into the columns
+            columns[j] = GRIDSIZE*j*i;
+        }
     }
-    else if(choice=='n')
+
+    for(int i=0; i<GRIDSIZE; i++)
     {
-        printf("\nQuitting\n");
-    } 
+        // index through row pointer pointer array to get value for columns array
+        columns = rows[i];
+        for(int j=0; j<GRIDSIZE; j++)
+        {
+            printf("%d\n", *(columns + j));
+        }
+    }
+
+    free(columns);
+    free(rows);
+
     return 0;
 }
-
-int welcome(){
-    
-    char key;
-    int select = 1;
-    
-    printf("\nWelcome to noughts and crosses!\n");
-    printf("\nPress Y to continue, press N to quit:\n");
-    
-    while(select){
-        key = getchar();
-
-        if(key=='y')
-        {
-            select = 0;
-        }
-        else if(key=='n')
-        {
-            select = 0;
-        }
-    }
-    return key;
-}
-
-int draw(int init)
-{
-    
-    char *pg;
-
-    if(init==1)
-    {
-        char *rows, *columns;
-        
-        pg = makegrid(rows, columns);
-
-        for(int i=0; i<GRIDSIZE; i++)
-        {
-
-            printf("%x\n",pg + i);
-
-        }
-    }
-
-}
-
-char *makegrid(char *rows, char *columns)
-{
-    //This function returns a pointer to an array containing a grid
-    rows = (char*)malloc(GRIDSIZE*sizeof(char));
-
-    for(int i=0;i<GRIDSIZE;i++)
-    {   
-        columns = (char*)malloc(GRIDSIZE*sizeof(char));
-
-        for(int j=0;j<GRIDSIZE;j++)
-        {
-            printf("%x\n", &columns[j]);
-        }
-
-        rows[i] = columns;
-        printf("%x\n",&rows[i]);
-    }
-    return rows;
-}
-
-
-
-
