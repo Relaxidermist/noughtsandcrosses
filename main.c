@@ -1,8 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-
-#define GRIDSIZE 5
+#define GRIDHEIGHT 60
+#define GRIDWIDTH 80
+#define SPACEHEIGHT 6
+#define SPACEWIDTH 8
 
 int main()
 {
@@ -11,33 +13,45 @@ int main()
     // Allocate memory for rows in grid pointers to pointers,
     // this is because this is a 1D array which will point to 
     // other 1D arrays
-    rows = (char**)malloc(GRIDSIZE*sizeof(char*));
+    rows = (char**)malloc(GRIDHEIGHT*sizeof(char*));
     // Fill array with values and print
-    for(int i=0; i<GRIDSIZE; i++)
+    for(int i=0; i<GRIDHEIGHT; i++)
     {
         // Allocate memory for 1D array for this array index in rows[i]
         // rows[i] is a char pointer pointer type
-        rows[i] = (char*)malloc(GRIDSIZE*sizeof(char));
+        rows[i] = (char*)malloc(GRIDWIDTH*sizeof(char));
 
-        for(int j=0; j<GRIDSIZE; j++)
+        for(int j=0; j<GRIDWIDTH; j++)
         {
             // assign columns char pointer type the address of the allocated
             // array for the point point array.
             columns = rows[i];
 
-            // put some values into the columns
-            columns[j] = GRIDSIZE*j*i;
+            if(i % SPACEHEIGHT == 0)
+            {
+                columns[j] = '-';
+            }
+            else if(j % SPACEWIDTH == 0)
+            {
+                columns[j] = '|';
+            }
+            else
+            {
+                columns[j] = ' ';
+            }
+
         }
     }
 
-    for(int i=0; i<GRIDSIZE; i++)
+    for(int i=0; i<GRIDHEIGHT; i++)
     {
         // index through row pointer pointer array to get value for columns array
         columns = rows[i];
-        for(int j=0; j<GRIDSIZE; j++)
+        for(int j=0; j<GRIDWIDTH; j++)
         {
-            printf("%d\n", *(columns + j));
+            printf("%c", *(columns + j));
         }
+        printf("\n");
     }
 
     free(columns);
