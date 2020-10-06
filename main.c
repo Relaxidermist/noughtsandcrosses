@@ -1,10 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define GRIDHEIGHT 60
-#define GRIDWIDTH 80
+#define GRIDHEIGHT 18
+#define GRIDWIDTH 36
 #define SPACEHEIGHT 6
-#define SPACEWIDTH 8
+#define SPACEWIDTH 12
 
 int main()
 {
@@ -29,11 +29,11 @@ int main()
 
             if(i % SPACEHEIGHT == 0)
             {
-                columns[j] = '-';
+                columns[j] = '#';
             }
             else if(j % SPACEWIDTH == 0)
             {
-                columns[j] = '|';
+                columns[j] = '#';
             }
             else
             {
