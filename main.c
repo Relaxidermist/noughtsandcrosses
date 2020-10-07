@@ -6,15 +6,19 @@
 #define SPACEHEIGHT 6
 #define SPACEWIDTH 12
 
+void *userinput(char *place);
+void updategrid(char *place, char *grid);
+
 int main()
 {
-    char **rows, *columns;
-    char move[20];
-    char c;
+    char **rows, *columns, place[2], grid[2][2];
     int stop, i;
 
     while(stop!=1)
     {
+
+        updategrid(place, *grid);
+
         // Allocate memory for rows in grid pointers to pointers,
         // this is because this is a 1D array which will point to 
         // other 1D arrays
@@ -59,23 +63,64 @@ int main()
             printf("\n");
         }
         
-        printf("Player Select Move in format xy i.e. '23': ");
-        scanf("%s", move);
+        userinput(place);
 
-        printf("Size of: %d\n", sizeof(move));
-
-        i = 0;
-        do
-        {
-            c = move[i];
-            printf("%c\n",move[i]);
-            i++;
-        }  while(c != '\0');
-
-        free(columns);
         free(rows);
     }
         
 
     return 0;
+}
+
+void *userinput(char *place)
+{
+    /* This function gets the user input from the terminal and parses it
+    * to determine how to move
+    */
+   int i;
+   char move[20], c;
+
+   printf("Player select next move in format xy (i.e. 23) : ");
+   scanf("%s", move);
+
+   i = 0;
+
+    do 
+    {
+        c = move[i];
+
+        place[i] = c;
+
+        printf("%c\n",move[i]);
+
+        i++;
+
+    } while(c != '\0');
+}
+
+void updategrid(char *place, char *grid)
+{
+    int i, n, *m;
+    
+    if(place[0]!='\0')
+    {
+
+        while(i<2)
+        {
+            switch(i){
+                case 0:
+                    n = place[i];
+                    break;
+                case 1:
+                    *m = place[i];
+                    break;
+                default:
+                    printf("exceeded input size\n");
+            }
+            i++;
+        }
+        printf("n = %c m = %c \n", n, *m);
+        grid[n][m] = 1;
+        printf("User Input!: %d\n", grid[n][m]);
+    }
 }
