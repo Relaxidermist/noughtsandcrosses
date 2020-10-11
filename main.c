@@ -6,6 +6,8 @@ out 2D array representing gameplay.
 verify that GRID SIZE for gameplay should not break
 game if broken - application should account for changing
 grid size.
+
+Update grid needs to point back to original grid
 */
 
 #include<stdio.h>
@@ -21,7 +23,7 @@ grid size.
 void *userinput(char *place);
 
 // Assign user moves to a grid to track gameplay.
-void updategrid(char *place, char *grid);
+void updategrid(char *place, char grid[][3]);
 
 // Main program function occurs here
 int main()
@@ -30,7 +32,7 @@ int main()
     char  **rows,     // Point to row pointers which store ascii grid/
           *columns,   // Point to arrays which store ascii grid/
           place[2],   // Representation of play move in 1D array - formay x,y
-          grid[2][2]; // Representation of gameplay grid used to track pieces
+          grid[3][3] = {0,0,0,0,0,0,0,0,0}; // Representation of gameplay grid used to track pieces
 
     int   stop,       // stop flag for application
           i;          // interfation counter for application
@@ -38,7 +40,7 @@ int main()
     while(stop!=1)
     {
 
-        updategrid(place, *grid);
+        updategrid(place, grid);
 
         // Allocate memory for rows in grid pointers to pointers,
         // this is because this is a 1D array which will point to
@@ -125,11 +127,11 @@ void *userinput(char *place)
 // Update grid array with new user place to track gameplay - this function indexes
 // through place to extract the values which are used to update the grid array
 // indicating that a piece is present
-void updategrid(char *place, char *grid)
+void updategrid(char *place, char grid[][3])
 {
     int i,
         n,
-        *m;
+        m;
 
     // Execute block if not empty string - indicated by end-of-string in place[0]
     if(place[0]!='\0')
@@ -146,7 +148,7 @@ void updategrid(char *place, char *grid)
                     n = place[i];
                     break;
                 case 1:
-                    *m = place[i];
+                    m = place[i];
                     break;
                 default:
                     printf("exceeded input size\n");
@@ -155,7 +157,7 @@ void updategrid(char *place, char *grid)
         }
 
         // Print out indexes to verify assignment
-        printf("n = %c m = %c \n", n, *m);
+        printf("n = %c m = %c \n", n, m);
 
         // set gameplay grid at indexes to 1 to indicate piece is present.
         grid[n][m] = 1;
@@ -165,11 +167,13 @@ void updategrid(char *place, char *grid)
 
         // Iterate over rows and columns of gameplay grid to show all values
         // of index in the grid.
+        // How to reference array indexes in 2D arrays?
         for(n = 0; n<=2; n++)
         {
-            for(*m = 0; *m<=2; *m++)
+            for(m = 0; m<=2; m++)
             {
-                printf("grid[%d][%d] = %d\n", n, *m, grid[n][m]);
+                // Print value at grid index n, m
+                printf("grid[%d][%d] = %c\n", n, m, grid[n][m]);
             }
         }
     }
